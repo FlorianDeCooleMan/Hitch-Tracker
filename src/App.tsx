@@ -1,35 +1,98 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import TripInfo from "./components/TripInfo";
+import MapView from "./components/MapView";
+import DriverCard from "./components/DriverCard";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [activeTab, setActiveTab] = useState("dashboard");
+
+  const tripData = {
+    origin: "Amsterdam Centraal",
+    destination: "Schiphol Airport",
+    estimatedTime: 35,
+    currentTime: 0,
+    driver: {
+      name: "Mohammed Hassan",
+      rating: 4.8,
+      imageUrl: "https://i.pravatar.cc/150?img=12",
+      carModel: "Toyota Prius",
+      licensePlate: "1-ABC-23",
+    },
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="border-b bg-white">
+        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center">
+              🚗
+            </div>
+            <div>
+              <h1 className="font-semibold">HitchTracker</h1>
+              <p className="text-sm text-gray-500">
+                Veilig & Transparant Reizen
+              </p>
+            </div>
+          </div>
+          <span className="text-green-600 border px-3 py-1 rounded text-sm">
+            ✅ Beveiligd
+          </span>
+        </div>
+      </header>
 
-export default App
+      {/* Tabs */}
+      <main className="container mx-auto p-4">
+        <div className="flex gap-2 mb-4">
+          {["dashboard", "safety", "costs", "history"].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`flex-1 py-2 rounded ${
+                activeTab === tab
+                  ? "bg-black text-white"
+                  : "bg-gray-200 text-gray-600"
+              }`}
+            >
+              {tab === "dashboard" && "📊 Dashboard"}
+              {tab === "safety" && "🛡️ Veiligheid"}
+              {tab === "costs" && "💰 Kosten"}
+              {tab === "history" && "⏳ Geschiedenis"}
+            </button>
+          ))}
+        </div>
+
+        {/* Tab Content */}
+        {activeTab === "dashboard" && (
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="space-y-4">
+              <TripInfo
+                origin={tripData.origin}
+                destination={tripData.destination}
+                estimatedTime={tripData.estimatedTime}
+                currentTime={tripData.currentTime}
+              />
+              <DriverCard driver={tripData.driver} />
+            </div>
+            <MapView
+              origin={tripData.origin}
+              destination={tripData.destination}
+              progress={0}
+            />
+          </div>
+        )}
+
+        {activeTab === "safety" && (
+          <div className="p-4 bg-white border rounded">🔒 Veiligheid</div>
+        )}
+        {activeTab === "costs" && (
+          <div className="p-4 bg-white border rounded">💶 Kosten</div>
+        )}
+        {activeTab === "history" && (
+          <div className="p-4 bg-white border rounded">🕒 Geschiedenis</div>
+        )}
+      </main>
+    </div>
+  );
+}

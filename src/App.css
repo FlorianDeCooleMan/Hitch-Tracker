@@ -1,42 +1,149 @@
-#root {
-  max-width: 1280px;
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fb;
+  color: #1a1a1a;
+}
+
+.container {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding: 1rem;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+header {
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+header h1 {
+  margin: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+header p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.tabs button {
+  flex: 1;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.tabs button.active {
+  background: #000;
+  color: #fff;
+}
+
+.tabs button:not(.active) {
+  background: #e5e7eb;
+  color: #374151;
 }
 
 .card {
-  padding: 2em;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-.read-the-docs {
-  color: #888;
+.trip-times {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.progress-bar {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: #2563eb;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.btn {
+  width: 100%;
+  margin-top: 0.75rem;
+  background: #111827;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.driver-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.driver-image {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.driver-info h4 {
+  margin: 0;
+}
+
+.driver-info p {
+  margin: 0.15rem 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.map-placeholder {
+  height: 192px;
+  background: linear-gradient(to right, #bfdbfe, #dbeafe);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+}
+
+.map-progress {
+  text-align: right;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.badge {
+  padding: 0.2rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.badge.green {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
 }
