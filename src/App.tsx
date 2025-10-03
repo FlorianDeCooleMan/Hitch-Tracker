@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TripInfo from "./components/TripInfo";
 import MapView from "./components/MapView";
 import DriverCard from "./components/DriverCard";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [currentTime, setCurrentTime] = useState(0);
+  const [tracking, setTracking] = useState(false);
 
   const tripData = {
     origin: "Amsterdam Centraal",
     destination: "Schiphol Airport",
     estimatedTime: 35,
-    currentTime: 0,
     driver: {
       name: "Mohammed Hassan",
       rating: 4.8,
@@ -19,6 +20,22 @@ export default function App() {
       licensePlate: "1-ABC-23",
     },
   };
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+
+    if (tracking && currentTime < tripData.estimatedTime) {
+      interval = setInterval(() => {
+        setCurrentTime((prev) =>
+          prev < tripData.estimatedTime ? prev + 1 : prev
+        );
+      }, 500);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [tracking, currentTime, tripData.estimatedTime]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -96,14 +113,18 @@ export default function App() {
                 origin={tripData.origin}
                 destination={tripData.destination}
                 estimatedTime={tripData.estimatedTime}
-                currentTime={tripData.currentTime}
+                currentTime={currentTime}
+                onStart={() => {
+                  setTracking(true);
+                  setCurrentTime(0);
+                }}
               />
               <DriverCard driver={tripData.driver} />
             </div>
             <MapView
               origin={tripData.origin}
               destination={tripData.destination}
-              progress={0}
+              progress={(currentTime / tripData.estimatedTime) * 100}
             />
           </div>
         )}
