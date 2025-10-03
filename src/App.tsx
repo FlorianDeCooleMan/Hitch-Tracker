@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TripInfo from "./components/TripInfo";
-import MapView from "./components/MapView";
 import DriverCard from "./components/DriverCard";
+import RouteMap from "./components/RouteMap";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -85,10 +85,12 @@ export default function App() {
               />
               <DriverCard driver={tripData.driver} />
             </div>
-            <MapView
-              origin={tripData.origin}
-              destination={tripData.destination}
-              progress={0}
+            <RouteMap
+              // Amsterdam Centraal
+              start={[4.9003, 52.3784]}
+              // Schiphol Airport
+              end={[4.7634, 52.3105]}
+              apiKey="eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImQ1NjE4NmMyMTExMDRiMTA5NzE2ZjgxMDg3Mjk2MWMzIiwiaCI6Im11cm11cjY0In0="
             />
           </div>
         )}
