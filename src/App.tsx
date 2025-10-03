@@ -36,9 +36,19 @@ export default function App() {
               </p>
             </div>
           </div>
-          <span className="text-green-600 border px-3 py-1 rounded text-sm">
-            ✅ Beveiligd
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-green-600 border px-3 py-1 rounded text-sm">✅ Beveiligd</span>
+            <button
+              onClick={() => {
+                localStorage.removeItem("ht_logged_in");
+                // soft redirect back to login
+                window.location.href = "/";
+              }}
+              className="border px-3 py-1 rounded text-sm"
+            >
+              Uitloggen
+            </button>
+          </div>
         </div>
       </header>
 
