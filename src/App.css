@@ -237,3 +237,9 @@ label {
   border-radius: 0.5rem;
   font-size: 0.9rem;
 }
+
+.tab-btn {
+  width: 15%;
+  min-width: 120px;
+  margin-right: 15px;
+}

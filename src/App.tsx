@@ -74,7 +74,7 @@ export default function App() {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`flex-1 py-2 rounded ${
+              className={`btn tab-btn py-2 rounded ${
                 activeTab === tab
                   ? "bg-black text-white"
                   : "bg-gray-200 text-gray-600"
