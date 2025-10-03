@@ -217,7 +217,9 @@ label {
   text-decoration: none;
 }
 
-.link:hover { text-decoration: underline; }
+.link:hover {
+  text-decoration: underline;
+}
 
 .link-button {
   background: transparent;

@@ -25,26 +25,41 @@ export default function App() {
       {/* Header */}
       <header className="border-b bg-white">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center">
-              🚗
+          <div className="container">
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <div
+                style={{
+                  width: 32,
+                  height: 32,
+                  background: "#111827",
+                  color: "#fff",
+                  borderRadius: 8,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                🚗
+              </div>
+              <div>
+                <h1>HitchTracker</h1>
+                <p>Veilig & Transparant Reizen</p>
+              </div>
             </div>
-            <div>
-              <h1 className="font-semibold">HitchTracker</h1>
-              <p className="text-sm text-gray-500">
-                Veilig & Transparant Reizen
-              </p>
-            </div>
+            <span
+              className="badge green"
+              style={{ border: "1px solid #a7f3d0" }}
+            >
+              Beveiligd
+            </span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-green-600 border px-3 py-1 rounded text-sm">✅ Beveiligd</span>
             <button
               onClick={() => {
                 localStorage.removeItem("ht_logged_in");
-                // soft redirect back to login
                 window.location.href = "/";
               }}
-              className="border px-3 py-1 rounded text-sm"
+              className="btn logout-btn"
             >
               Uitloggen
             </button>
