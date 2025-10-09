@@ -3,6 +3,7 @@ interface TripInfoProps {
   destination: string;
   estimatedTime: number;
   currentTime: number;
+  onStart: () => void;
 }
 
 export default function TripInfo({
@@ -10,6 +11,7 @@ export default function TripInfo({
   destination,
   estimatedTime,
   currentTime,
+  onStart,
 }: TripInfoProps) {
   return (
     <div className="card trip-info">
@@ -33,7 +35,9 @@ export default function TripInfo({
         <span>Huidige tijd: {currentTime}m</span>
       </div>
 
-      <button className="btn">▶ Start Tracking</button>
+      <button className="btn" onClick={onStart}>
+        ▶ Start Tracking
+      </button>
     </div>
   );
 }
