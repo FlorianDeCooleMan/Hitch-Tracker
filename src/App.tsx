@@ -12,14 +12,22 @@ export default function App() {
   // Route info (displayed and used in map)
   const [origin, setOrigin] = useState("Amsterdam Centraal");
   const [destination, setDestination] = useState("Schiphol Airport");
-  const [startCoords, setStartCoords] = useState<[number, number] | null>([4.9003, 52.3784]);
-  const [endCoords, setEndCoords] = useState<[number, number] | null>([4.7634, 52.3105]);
+  const [startCoords, setStartCoords] = useState<[number, number] | null>([
+    4.9003, 52.3784,
+  ]);
+  const [endCoords, setEndCoords] = useState<[number, number] | null>([
+    4.7634, 52.3105,
+  ]);
 
   // Temporary/pending input values before confirmation
   const [pendingOrigin, setPendingOrigin] = useState(origin);
   const [pendingDestination, setPendingDestination] = useState(destination);
-  const [pendingStart, setPendingStart] = useState<[number, number] | null>(startCoords);
-  const [pendingEnd, setPendingEnd] = useState<[number, number] | null>(endCoords);
+  const [pendingStart, setPendingStart] = useState<[number, number] | null>(
+    startCoords
+  );
+  const [pendingEnd, setPendingEnd] = useState<[number, number] | null>(
+    endCoords
+  );
 
   // 🔑 Your OpenRouteService API Key (hardcoded for now)
   // hier is de link. https://openrouteservice.org
@@ -59,6 +67,17 @@ export default function App() {
     }
   };
 
+  // Timer effect: when tracking is active, increment currentTime every second
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (tracking) {
+      timer = setInterval(() => {
+        setCurrentTime((prev) => prev + 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [tracking]);
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* ---------- HEADER ---------- */}
@@ -95,9 +114,7 @@ export default function App() {
 
           {/* Status + logout */}
           <div className="flex items-center gap-2">
-            <span className="text-green-600 border px-3 py-1 rounded text-sm">
-              ✅ Beveiligd
-            </span>
+            <span className="text-green-600 border px-3 py-1 rounded text-sm"></span>
             <button
               onClick={() => {
                 localStorage.removeItem("ht_logged_in");
@@ -194,10 +211,15 @@ export default function App() {
             {/* RIGHT PANEL — map display */}
             <div className="bg-white border rounded p-2">
               {startCoords && endCoords ? (
-                <RouteMap start={startCoords} end={endCoords} apiKey={API_KEY} />
+                <RouteMap
+                  start={startCoords}
+                  end={endCoords}
+                  apiKey={API_KEY}
+                />
               ) : (
                 <div className="text-center text-gray-500 py-10">
-                  🗺️ Kies locaties en klik op <b>Route bijwerken</b> om de kaart te laden
+                  🗺️ Kies locaties en klik op <b>Route bijwerken</b> om de kaart
+                  te laden
                 </div>
               )}
             </div>
