@@ -42,6 +42,33 @@ export default function App() {
     },
   };
 
+  const historyData = [
+    {
+      id: 1,
+      date: "2025-10-08",
+      origin: "Amsterdam Centraal",
+      destination: "Utrecht Centraal",
+      driverName: "Jan Jansen",
+      cost: "€25,50",
+    },
+    {
+      id: 2,
+      date: "2025-10-05",
+      origin: "Rotterdam Blaak",
+      destination: "Den Haag HS",
+      driverName: "Fatima El Idrissi",
+      cost: "€15,00",
+    },
+    {
+      id: 3,
+      date: "2025-09-28",
+      origin: "Schiphol Airport",
+      destination: "Leiden Centraal",
+      driverName: "Klaas de Vries",
+      cost: "€22,75",
+    },
+  ];
+
   /**
    * When user clicks "Route bijwerken" (Update Route)
    * -> Replace the current route info with the pending one
@@ -198,6 +225,39 @@ export default function App() {
                   🗺️ Kies locaties en klik op <b>Route bijwerken</b> om de kaart te laden
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {/* ----------- HISTORY TAB ----------- */}
+        {activeTab === "history" && (
+          <div className="bg-white border rounded-lg p-4">
+            <h2 className="text-xl font-bold mb-4">Ritgeschiedenis</h2>
+            <div className="space-y-4">
+              {historyData.map((trip) => (
+                <div
+                  key={trip.id}
+                  className="border-b pb-4 mb-4 flex justify-between items-center last:border-b-0 last:pb-0 last:mb-0"
+                >
+                  <div>
+                    <p className="font-semibold">
+                      {trip.origin} → {trip.destination}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      {new Date(trip.date).toLocaleDateString("nl-NL", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}{" "}
+                      met {trip.driverName}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-semibold text-lg">{trip.cost}</p>
+                      <br></br>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         )}
