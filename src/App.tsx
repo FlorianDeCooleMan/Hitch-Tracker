@@ -67,17 +67,6 @@ export default function App() {
     }
   };
 
-  // Timer effect: when tracking is active, increment currentTime every second
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (tracking) {
-      timer = setInterval(() => {
-        setCurrentTime((prev) => prev + 1);
-      }, 1000);
-    }
-    return () => clearInterval(timer);
-  }, [tracking]);
-
   return (
     <div className="min-h-screen bg-gray-50">
       {/* ---------- HEADER ---------- */}
