@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import TripInfo from "./components/TripInfo";
 import DriverCard from "./components/DriverCard";
 import RouteMap from "./components/RouteMap";
@@ -8,7 +8,6 @@ export default function App() {
   // Current active tab (Dashboard, Safety, etc.)
   const [activeTab, setActiveTab] = useState("dashboard");
   const [currentTime, setCurrentTime] = useState(0);
-  const [tracking, setTracking] = useState(false);
 
   // Route info (displayed and used in map)
   const [origin, setOrigin] = useState("Amsterdam Centraal");
@@ -41,6 +40,10 @@ export default function App() {
       licensePlate: "1-ABC-23",
     },
   };
+
+  // Veiligheid instellingen toggles
+  const [autoDeken, setAutoDeken] = useState(true); // "Auto Deken" aan/uit
+  const [gpsTracking, setGpsTracking] = useState(true); // GPS tracking aan/uit
 
   /**
    * When user clicks "Route bijwerken" (Update Route)
@@ -141,7 +144,6 @@ export default function App() {
                 estimatedTime={tripData.estimatedTime}
                 currentTime={currentTime}
                 onStart={() => {
-                  setTracking(true);
                   setCurrentTime(0);
                 }}
               />
@@ -198,6 +200,103 @@ export default function App() {
                   🗺️ Kies locaties en klik op <b>Route bijwerken</b> om de kaart te laden
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {/* ----------- VEILIGHEID TAB ----------- */}
+        {activeTab === "safety" && (
+          <div className="safety-grid gap-4 md:grid-cols-3">
+            {/* Linker kolom: delen & noodhulp & snelle contacten */}
+            <div className="space-y-4 md:col-span-2">
+              {/* Rit delen */}
+              <div className="bg-white border rounded p-4">
+                <h2 className="font-semibold mb-2 flex items-center gap-2">🔗 Rit Delen</h2>
+                <p className="text-sm text-gray-600 mb-3">
+                  Deel deze rit live zodat anderen je voortgang kunnen volgen.
+                </p>
+                <button
+                  className="w-full py-2 rounded font-medium bg-black text-white hover:bg-gray-800"
+                  onClick={() => {
+                    navigator.clipboard.writeText(
+                      window.location.href.replace("/safety", "/dashboard")
+                    );
+                    alert("Deelbare rit link gekopieerd!");
+                  }}
+                >
+                  Deel deze rit
+                </button>
+              </div>
+
+              {/* Noodhulp */}
+              <div className="bg-white border rounded p-4">
+                <h2 className="font-semibold mb-2 flex items-center gap-2">🆘 Noodhulp</h2>
+                <p className="text-sm text-gray-600 mb-3">
+                  Druk op de knop hieronder in geval van nood.
+                </p>
+                <button
+                  className="w-full py-2 rounded font-medium bg-red-600 text-white hover:bg-red-700"
+                  onClick={() => alert("Noodhulp geactiveerd! (demo)")}
+                >
+                  Noodhulp
+                </button>
+              </div>
+
+              {/* Snelle contacten */}
+              <div className="bg-white border rounded p-4">
+                <h2 className="font-semibold mb-3 flex items-center gap-2">⚡ Snelle contacten</h2>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    className="py-3 rounded font-medium bg-red-600 text-white hover:bg-red-700"
+                    onClick={() => alert("Bellen 112... (demo)")}
+                  >
+                    112
+                  </button>
+                  <button
+                    className="py-3 rounded font-medium bg-blue-600 text-white hover:bg-blue-700"
+                    onClick={() => alert("Familie gewaarschuwd! (demo)")}
+                  >
+                    Familie
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Rechter kolom: Veiligheidsinstellingen */}
+            <div className="space-y-4">
+              <div className="bg-white border rounded p-4">
+                <h2 className="font-semibold mb-3 flex items-center gap-2">🛡️ Veiligheidsinstellingen</h2>
+                <ul className="space-y-4 list-none p-0 m-0">
+                  <li className="flex items-center justify-between">
+                    <div>
+                      <p className="m-0 font-medium">Auto Deken</p>
+                      <p className="m-0 text-xs text-gray-500">Automatische bescherming actief</p>
+                    </div>
+                    <button
+                      className={`toggle ${autoDeken ? "on" : "off"}`}
+                      onClick={() => setAutoDeken(v => !v)}
+                      type="button"
+                      aria-pressed={autoDeken}
+                    >
+                      <span className="knob" />
+                    </button>
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <div>
+                      <p className="m-0 font-medium">GPS tracking</p>
+                      <p className="m-0 text-xs text-gray-500">Realtime locatie delen</p>
+                    </div>
+                    <button
+                      className={`toggle ${gpsTracking ? "on" : "off"}`}
+                      onClick={() => setGpsTracking(v => !v)}
+                      type="button"
+                      aria-pressed={gpsTracking}
+                    >
+                      <span className="knob" />
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         )}
